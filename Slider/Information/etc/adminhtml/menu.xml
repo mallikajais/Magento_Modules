@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+        <menu>
+                <add id="Slider_Information::slider"
+                title="Slider Information"
+                module="Slider_Information"
+                sortOrder="0"
+                resource="Slider_Information::slider"/>
+
+                 <add id="Slider_Information::information"
+                title="Slider Data"
+                module="Slider_Information"
+                sortOrder="0"
+                action="slider/information/index" 
+                parent="Slider_Information::slider"
+                resource="Slider_Information::information" />
+        </menu>
+        
+</config>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+</head>
+<body>
+
+<h2>Product List</h2>
+<button id="show"><a href="#" >Earing</a></button>
+<div id="hide" style="display:none;">
+
+<?php
+// $id = 'YOUR_PRODUCT_ID';
+echo "<br>";
+$productid=1;
+$sku = 'YOUR_PRODUCT_SKU'; // no sku here  :(
+$_product = $block->getProductById($productid);
+//$_product = $block->getProductBySku($sku); // this line overrides $_product :(
+echo "Product Id - ".$_product->getEntityId();
+echo '<br />';
+echo "Product Name - ".$_product->getName();
+echo '<br />';
+echo "Product SKU - ".$_product->getSKU();
+echo '<br />';
+echo "Product Price - ".$_product->getPrice();
+echo '<br />';
+echo "Product Description - ".$_product->getDescription();
+echo '<br />';
+echo "Product Short Description - ".$_product->getshort_description();
+echo '<br />';
+$img=$_product->getImage();
+$images = $_product->getMediaGalleryImages();
+
+
+foreach($images as $child){
+  if($child->getFile() == $img): 
+  ?>
+  <img src="<?php echo $child->getUrl(); ?>" style='width:20%;height:30vh' >
+  
+  <?php endif; ?>
+<?php 
+} 
+
+$remote = $this->_objectManager->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
+$userip= $remote->getRemoteAddress();
+
+$model=$this->_objectManager->create('Mage\HelloWorld\Model\Model');
+ $datacollection=$model->getCollection();
+foreach ($datacollection as $data) {
+
+    $id=$data->getId();
+    $like=$data->getLike();
+    echo "<br>";
+    $ip= $data->getremote();
+
+}
+$model=$this->_objectManager->create('Mage\HelloWorld\Model\Model');
+$select = $model->getCollection()->getSelect()
+     ->from('total_like')
+     ->reset(\Zend_Db_Select::COLUMNS)
+     ->columns(['remote', new \Zend_Db_Expr('COUNT(`total_like`.`product_id`) as count')])
+     ->group('remote');
+ 
+
+ //  SELECT `sales_order_item`.`created_at`, count(`sales_order_item`.`product_id`) FROM `sales_order_item` GROUP BY `created_at`
+ // echo (string) $select;
+$connection = $model->getResource()->getConnection();
+
+  $raw = $connection->fetchAll($select);
+  $count=0;
+  foreach($raw as $data){
+    $count=$count+1;
+  }
+
+ 
+?>
+
+
+
+
+<h2 id="root" name="root"><?php echo $count;?></h2>
+<button onclick="increment()" class="btn-secondary like-review" style="color: #ffffff;background: #ed2553;">
+    <i class="fa fa-heart" aria-hidden="true"></i> Like
+</button>
+<label id="id" name="id" style="display:none;"><?php echo $id;?></label>
+<label id="like" name="like" style="display:none;"><?php echo $like;?></label>
+<label id="ip" name="ip" style="display:none;"><?php echo $ip;?></label>
+<label id="userip" name="userip"  style="display:none;"><?php echo $userip;?></label>
+<label id="productid" name="productid"  style="display:none;"><?php echo $productid;?></label>
+</body>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+var hide=document.getElementById('hide');
+document.addEventListener("click", function() {
+  hide.style.display = "block";
+});
+  // var count=0;
+  // document.getElementById('root').innerText=count;
+  // var c =document.getElementById('root').innerHTML;
+  var ip =document.getElementById('ip').innerHTML;
+  var id =document.getElementById('id').innerHTML;
+  var like=document.getElementById('like').innerHTML;
+  var userip =document.getElementById('userip').innerHTML;
+  var productid =document.getElementById('productid').innerHTML;
+  // console.log(productid);
+  
+  // $(document).one('click', '.like-review', function(e) {
+	// $(this).html('<i class="fa fa-heart" aria-hidden="true"></i> You liked');
+  function increment(){
+    var url = "<?php echo $block->getBaseUrl().'helloworld/index/like' ?>";
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        userip: userip,
+        ip: ip,
+        id:id,
+        like:like,
+        productid:productid
+        
+      },
+      success: function(result){
+        // document.getElementById('root').innerText=result;
+        // alert(result);
+      }
+    });
+   
+
+  }
+	
+  
+
+  
+	// document.getElementById('count').innerHTML =  count;
+		// $(this).children('.fa-heart').addClass('animate-like');
+    // count=count+1;
+    
+    // document.getElementById('root').innerText=count;
+	// });
+
+</script>
+</html>

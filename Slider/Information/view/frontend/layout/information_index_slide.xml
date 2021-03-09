@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<head>        
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <css src="Slider_Information::css/owl.carousel.css" />
+    <css src="Slider_Information::css/owl.carousel.min.css" /> 
+    <css src="Slider_Information::css/animate.css" /> 
+    <!-- <css src="Slider_Information::css/owl.theme.default.css" />
+    <css src="Slider_Information::css/owl.theme.default.min.css" /> 
+    <css src="Slider_Information::css/owl.theme.green.css" /> 
+     <css src="Slider_Information::css/owl.theme.green.min.css" />  -->
+</head>
+    <referenceContainer name="content">
+        <block class="Magento\Framework\View\Element\Template" name="slider_index_slide" template="Slider_Information::index.phtml" />
+    </referenceContainer>   
+</page>
+    

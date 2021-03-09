@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Inchoo_Helloworld::first_level_demo"
+             title="Inchoo First Level"
+             module="Inchoo_Helloworld"
+             sortOrder="9999"
+             resource="Magento_Backend::content" />
+
+        <add id="Inchoo_MenuItem::second_level_demo"
+             title="Inchoo Second Level Item"
+             module="Inchoo_Helloworld"
+             sortOrder="0"
+             action="helloworld/index/index"
+             parent="Inchoo_Helloworld::first_level_demo"
+             resource="Magento_Backend::content" />
+
+    
+      <add id="Inchoo_Helloworld::greetings"
+        title="Greetings"
+        translate="title" 
+        module="Inchoo_Helloworld" 
+        parent="Magento_Backend::content" 
+        sortOrder="50"
+        dependsOnModule="Inchoo_Helloworld" 
+        resource="Inchoo_Helloworld::greetings"/>
+
+      <add id="Inchoo_Helloworld::greetings_helloworld" 
+      title="Hello World" 
+      translate="title" 
+      module="Inchoo_Helloworld" 
+      parent="Inchoo_Helloworld::greetings" 
+      sortOrder="10" 
+      dependsOnModule="Inchoo_Helloworld" 
+      action="helloworld/helloworld/index" 
+      resource="Inchoo_Helloworld::greetings"/>
+    
+
+    </menu>
+</config>
